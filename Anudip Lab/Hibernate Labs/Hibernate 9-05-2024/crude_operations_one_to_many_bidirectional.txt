@@ -1,0 +1,47 @@
+package com.demo.JPA_Hibernate_CRUD;
+
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityTransaction;
+import Entity.Instructor;
+
+public class InstructorCRUDOperations 
+{
+    public void insertInstructor(Instructor instructor) 
+	{
+        EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
+        EntityTransaction entityTransaction = entityManager.getTransaction();
+        entityTransaction.begin();
+        entityManager.persist(instructor);
+        entityTransaction.commit();
+        entityManager.close();
+    }
+
+    public Instructor findInstructor(int id) 
+	{
+        EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
+        Instructor instructor = entityManager.find(Instructor.class, id);
+        entityManager.close();
+        return instructor;
+    }
+
+    public void updateInstructor(Instructor updatedInstructor) 
+	{
+        EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
+        EntityTransaction entityTransaction = entityManager.getTransaction();
+        entityTransaction.begin();
+        entityManager.merge(updatedInstructor);
+        entityTransaction.commit();
+        entityManager.close();
+    }
+
+    public void deleteInstructor(int id)
+	{
+        EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
+        EntityTransaction entityTransaction = entityManager.getTransaction();
+        entityTransaction.begin();
+        Instructor instructor = entityManager.find(Instructor.class, id);
+        entityManager.remove(instructor);
+        entityTransaction.commit();
+        entityManager.close();
+    }
+}

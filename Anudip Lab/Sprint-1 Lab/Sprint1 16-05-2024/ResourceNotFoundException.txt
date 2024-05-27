@@ -1,0 +1,25 @@
+package com.companyname.springbootcrudrest.exception;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
+
+/**
+ * Custom exception class for resource not found errors.
+ * This exception is annotated with @ResponseStatus to indicate that
+ * when this exception is thrown, it should result in an HTTP 404 response.
+ */
+@ResponseStatus(value = HttpStatus.NOT_FOUND)
+public class ResourceNotFoundException extends Exception 
+{
+
+    private static final long serialVersionUID = 1L;
+
+    /**
+     * Constructor for ResourceNotFoundException.
+     * @param message The exception message.
+     */
+    public ResourceNotFoundException(String message) 
+	{
+        super(message);
+    }
+}

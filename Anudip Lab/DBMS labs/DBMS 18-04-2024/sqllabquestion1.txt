@@ -1,0 +1,61 @@
+/*1. Consider two tables, customers and orders, with the following structures:
+
+Customers Table:
+
+customer_id (Primary Key)
+
+first_name
+
+Last_name
+
+Orders Table:
+
+order_id (Primary Key)
+
+customer_id (Foreign Key)
+
+order_date
+
+Total_amount
+
+Write an SQL query to retrieve the first and last names of customers along with the
+
+order date and total amount of their orders. Use an INNER JOIN to connect the two
+
+tables.*/
+
+mysql> use sqllab;
+Database changed
+
+mysql> CREATE TABLE customers (customer_id INT PRIMARY KEY,first_name VARCHAR(50),last_name VARCHAR(50));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> INSERT INTO customers (customer_id, first_name, last_name) VALUES(1, 'Anushka', 'Varma'),(2, 'Shalini', 'Roy'),(3, 'Keerti', 'Patil'),(4, 'chetan', '
+Bhagat'),(5, 'Shilpa', 'Shinde');
+Query OK, 5 rows affected (0.01 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> CREATE TABLE orders (order_id INT PRIMARY KEY,customer_id INT,order_date DATE,total_amount DECIMAL(10, 2),FOREIGN KEY (customer_id) REFERENCES customers(customer_id));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> INSERT INTO orders (order_id, customer_id, order_date, total_amount) VALUES(101, 1, '2023-03-5', 200.00),(102, 2, '2023-03-2', 400.00),(103, 3, '2023
+-03-3', 600.00),(104, 4, '2023-03-9', 800.00),(105, 5, '2023-03-7', 100.00);
+Query OK, 5 rows affected (0.01 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> select c.first_name, c.last_name, o.order_date, o.total_amount FROM customers c INNER JOIN o ON c.customer_id = o.customer_id;
+ERROR 1146 (42S02): Table 'sqllab.o' doesn't exist
+
+mysql> select c.first_name, c.last_name, o.order_date, o.total_amount FROM customers c INNER JOIN orders o ON c.customer_id = o.customer_id;
++------------+-----------+------------+--------------+
+| first_name | last_name | order_date | total_amount |
++------------+-----------+------------+--------------+
+| Anushka    | Varma     | 2023-03-05 |       200.00 |
+| Shalini    | Roy       | 2023-03-02 |       400.00 |
+| Keerti     | Patil     | 2023-03-03 |       600.00 |
+| chetan     | Bhagat    | 2023-03-09 |       800.00 |
+| Shilpa     | Shinde    | 2023-03-07 |       100.00 |
++------------+-----------+------------+--------------+
+5 rows in set (0.00 sec)
+
+mysql>
